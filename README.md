@@ -1,80 +1,81 @@
-# 🍽️ POSystem – Restaurant Point of Sale System
+# 🍽️ POSystem – Restaurant POS System
 
-**POSystem** is a full-featured, modern Point of Sale (POS) system built with ASP.NET Core MVC and Entity Framework Core. It’s designed specifically for restaurants to handle orders, manage menus, split bills, generate receipts, collect customer feedback, and analyze daily performance through reports.
-
----
-
-## 🚀 Features
-
-- ✅ **Menu Management**
-  - Add/edit/delete categorized menu items (Main Dishes, Pizzas, Burgers, etc.)
-  - Set item availability
-
-- 🧾 **Order Handling**
-  - Step-by-step order placement
-  - Live search & category filters
-  - Order review before confirmation
-  - Multiple payment methods (split bills: Cash, Card, QR, Other)
-
-- 💳 **Professional Receipt**
-  - Beautiful printed receipts with VAT breakdown
-  - QR code linking to customer feedback form
-  - PDF export and print support
-
-- 📝 **Customer Feedback**
-  - QR code on receipts leads to a live feedback form
-  - Rate food, service, and cleanliness (0–5 stars)
-  - Optional comment field
-  - Feedback saved in the database for later review
-
-- 📊 **Dashboard & Reports**
-  - Real-time sales overview
-  - Daily best sellers
-  - Order history with date filtering
-  - CSV export for accounting
-  - Shift closing report (sales summary by user, payments, totals)
-
-- 👥 **Role-Based Access**
-  - Staff, Supervisor, and Manager access levels
-  - Managers can void orders, close shifts, and export data
+A modern restaurant Point of Sale system built with ASP.NET Core MVC & Entity Framework. Designed to streamline orders, receipts, split payments, feedback collection, and shift reporting.
 
 ---
 
-## 🧰 Tech Stack
+## 🚀 Key Features
 
-- **Frontend:** Razor Pages + Bootstrap 5
-- **Backend:** ASP.NET Core MVC
-- **Database:** SQL Server (LocalDB or full instance)
-- **ORM:** Entity Framework Core
-- **Authentication:** Session-based login with role management
-- **Others:**
-  - `QRCoder` for generating receipt QR codes
-  - `jsPDF` for PDF export
-
----
-
-## 📸 Screenshots
-
-> You can add actual images here using:  
-> `![Screenshot](screenshots/order-page.png)`  
-> Create a `screenshots/` folder in the repo and upload your images.
+- 🧾 Step-by-step Order Creation with Review
+- 💳 Multiple Payment Methods (split bills)
+- 📄 Printable Receipts with VAT breakdown
+- 📲 QR Code Feedback (food, service, cleanliness)
+- 📊 Dashboard & Shift Reports
+- 📦 CSV Export for accounting
+- 🧑‍💼 Role-based access: Staff, Supervisor, Manager
 
 ---
 
-## ⚙️ Installation & Setup
+## 🛠️ How to Run
 
-### 🔧 Prerequisites
-
-- [.NET SDK 8+](https://dotnet.microsoft.com/)
-- Visual Studio or VS Code
-- SQL Server LocalDB (or update connection string for full SQL)
-
-### 🖥️ Run Locally
+### 1. Clone & Build
 
 ```bash
 git clone https://github.com/walidgrw/posystem.git
 cd posystem
 dotnet restore
 dotnet ef database update
-dotnet run
+2. Start the Server with Network Access
+To make the QR code link work on mobile:
 
+bash
+Copy
+Edit
+dotnet run --urls http://0.0.0.0:5000
+🔗 This makes the app accessible from other devices on the same network.
+
+3. Get Your IP Address
+Open terminal & run:
+
+bash
+Copy
+Edit
+ipconfig
+Copy your local IP address (e.g., 192.168.x.x) and update this line inside your Details.cshtml:
+
+csharp
+Copy
+Edit
+string url = $"http://192.168.x.x:5000/Feedback/Create?orderId={Model.Id}";
+Now QR code will open a real page on the customer’s phone.
+
+⚙️ Tech Stack
+ASP.NET Core MVC
+
+SQL Server / LocalDB
+
+Entity Framework Core
+
+Bootstrap 5
+
+jsPDF, QRCoder
+
+📦 Deployment Ready
+Run on LAN for tablet/mobile order
+
+Export reports for accounting
+
+Print receipts or save as PDF
+
+Customer can scan → give feedback instantly
+
+🧑‍💻 Author
+Walid Grawi – github.com/walidgrw
+
+yaml
+Copy
+Edit
+
+---
+
+Want me to generate this into a real `README.md` file and add it to your repo directory?
