@@ -1,0 +1,112 @@
+﻿@model POSystem.Models.OrderViewModel
+
+@{
+    ViewData["Title"] = "Review & Payment";
+    var total = Model.Total.ToString("F2");
+}
+
+<div class="container py-4">
+    <h2 class="text-center mb-4">🧾 Review Order & Complete Payment</h2>
+
+    <!-- ⚠️ Payment mismatch message -->
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger text-center">
+            ⚠️ The total amount of all payments must exactly match the order total: <strong>@Model.Total.ToString("F2") MAD</strong>
+        </div>
+    }
+
+    <form asp-action="Complete" method="post">
+        <!-- Hidden Fields for Items -->
+        @for (int i = 0; i < Model.ItemIds.Count; i++)
+        {
+            <input type="hidden" name="ItemIds" value="@Model.ItemIds[i]" />
+            <input type="hidden" name="Quantities" value="@Model.Quantities[i]" />
+        }
+
+        <!-- 🧾 Order Summary Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Item</th>
+                        <th class="text-center">Qty</th>
+                        <th class="text-end">Unit Price</th>
+                        <th class="text-end">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.SelectedItems)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td class="text-center">@item.Quantity</td>
+                            <td class="text-end">@item.Price.ToString("F2") MAD</td>
+                            <td class="text-end">@item.Total.ToString("F2") MAD</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 💰 Summary Totals -->
+        <div class="text-end">
+            <p><strong>Subtotal:</strong> @Model.Subtotal.ToString("F2") MAD</p>
+            <p><strong>VAT (Included):</strong> @Model.VAT.ToString("F2") MAD</p>
+            <p class="fs-5 fw-bold"><strong>Total:</strong> @total MAD</p>
+        </div>
+
+        <!-- 💳 Payment Breakdown -->
+        <div class="mt-5 mb-4 w-75 mx-auto">
+            <h5 class="text-center">💳 Payment Breakdown</h5>
+            <div id="paymentContainer">
+                <div class="row g-2 mb-2 payment-row">
+                    <div class="col-md-6">
+                        <select name="PaymentMethods" class="form-select" required>
+                            <option value="">Select Method</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Card">Card</option>
+                            <option value="QR">QR Code</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="number" name="PaymentAmounts" step="0.01" class="form-control" placeholder="Amount" required />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-center">
+                        <button type="button" class="btn btn-outline-danger btn-sm remove-payment">🗑️</button>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-outline-secondary btn-sm mt-2" onclick="addPayment()">➕ Add Another Payment</button>
+        </div>
+
+        <!-- ✅ Submit -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-lg btn-success w-50 py-3 fs-4">
+                ✅ Confirm & Place Order
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        function addPayment() {
+            const container = document.getElementById("paymentContainer");
+            const template = container.querySelector(".payment-row");
+            const clone = template.cloneNode(true);
+            clone.querySelector("select").selectedIndex = 0;
+            clone.querySelector("input").value = "";
+            container.appendChild(clone);
+        }
+
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("remove-payment")) {
+                const row = e.target.closest(".payment-row");
+                const rows = document.querySelectorAll(".payment-row");
+                if (rows.length > 1) row.remove();
+            }
+        });
+    </script>
+}

@@ -1,0 +1,65 @@
+﻿@model List<POSystem.Models.Feedback>
+
+@{
+    ViewData["Title"] = "Customer Feedback";
+    var avgRating = ViewBag.AverageRating;
+    var avgService = ViewBag.AverageService;
+    var avgFood = ViewBag.AverageFood;
+}
+
+<div class="container py-4">
+    <h2 class="text-center mb-4">📊 Customer Feedback Summary</h2>
+
+    <div class="row text-center mb-5">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-start border-4 border-warning">
+                <div class="card-body">
+                    <h6 class="text-muted">🌟 Avg. Overall Rating</h6>
+                    <h2 class="text-warning">@avgRating.ToString("0.0") / 5</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-start border-4 border-success">
+                <div class="card-body">
+                    <h6 class="text-muted">🧑‍🍳 Service Quality</h6>
+                    <h2 class="text-success">@avgService.ToString("0.0") / 5</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-start border-4 border-primary">
+                <div class="card-body">
+                    <h6 class="text-muted">🍽️ Food Quality</h6>
+                    <h2 class="text-primary">@avgFood.ToString("0.0") / 5</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Rating</th>
+                    <th>Service</th>
+                    <th>Food</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SubmittedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@item.Rating</td>
+                        <td>@item.Service</td>
+                        <td>@item.Food</td>
+                        <td>@item.Comment</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

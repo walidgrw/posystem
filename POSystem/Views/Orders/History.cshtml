@@ -1,0 +1,74 @@
+﻿@model List<POSystem.Models.Order>
+
+@{
+    ViewData["Title"] = "Order History";
+    string selectedDate = ViewBag.SelectedDate ?? "";
+    string userRole = Context.Session.GetString("UserRole") ?? "";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">📜 Order History</h2>
+
+        <form method="get" class="d-flex align-items-center gap-2">
+            <input type="date" name="date" class="form-control" value="@selectedDate" />
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <a asp-action="History" class="btn btn-secondary">Reset</a>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Order #</th>
+                <th>Date</th>
+                <th>Total (MAD)</th>
+                <th>VAT</th>
+                <th>Subtotal</th>
+                <th>Items</th>
+                <th>Status</th>
+                <th>Actions</th>
+                <th>Payment</th>
+                <th>Created By</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr class="@(order.Status == "Voided" ? "table-danger" : "")">
+                    <td>@order.Id</td>
+                    <td>@order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@order.Total.ToString("F2")</td>
+                    <td>@order.VAT.ToString("F2")</td>
+                    <td>@order.Subtotal.ToString("F2")</td>
+                    <td>@order.Payments</td>
+                    <td>@order.CreatedBy</td>
+                    <td>
+                        @foreach (var item in order.OrderItems)
+                        {
+                            <div>@item.MenuItem?.Name x @item.Quantity</div>
+                        }
+                    </td>
+                    <td>
+                        <span class="badge bg-@(order.Status == "Voided" ? "danger" : "success")">
+                            @order.Status
+                        </span>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary" asp-action="Details" asp-route-id="@order.Id">View</a>
+
+                        @if ((userRole == "Manager" || userRole == "Supervisor") && order.Status != "Voided")
+                        {
+                            <form asp-action="Void" asp-route-id="@order.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Are you sure you want to void this order?');">
+                                    Void
+                                </button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

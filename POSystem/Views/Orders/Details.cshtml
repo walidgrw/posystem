@@ -1,0 +1,142 @@
+﻿@model POSystem.Models.Order
+@using QRCoder
+
+@{
+    ViewData["Title"] = $"Order #{Model.Id}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string url = $"http://172.20.10.2:5000/Feedback/Create?orderId={Model.Id}";
+    QRCodeGenerator qrGenerator = new QRCodeGenerator();
+    QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
+    Base64QRCode qrCode = new Base64QRCode(qrCodeData);
+    string qrCodeImageAsBase64 = qrCode.GetGraphic(20);
+}
+
+<!-- Include jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<div class="container py-4" id="receipt">
+    <!-- Header Branding -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">🍽️ Maison Marocaine</h2>
+        <p class="text-muted small">123 Medina Blvd, Marrakesh</p>
+        <p class="text-muted small">📞 +212 600-123456</p>
+    </div>
+
+    <!-- Order Info -->
+    <div class="text-center mb-4">
+        <p class="text-muted">Order #: <strong>@Model.Id</strong></p>
+        <p class="text-muted">Date: <strong>@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</strong></p>
+    </div>
+
+    <!-- Itemized Table -->
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Item</th>
+                <th class="text-center">Qty</th>
+                <th class="text-end">Unit (MAD)</th>
+                <th class="text-end">Total (MAD)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                <tr>
+                    <td>@item.MenuItem.Name</td>
+                    <td class="text-center">@item.Quantity</td>
+                    <td class="text-end">@item.Price.ToString("F2")</td>
+                    <td class="text-end">@((item.Quantity * item.Price).ToString("F2"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Summary -->
+    <div class="text-end">
+        <p><strong>Subtotal:</strong> @Model.Subtotal.ToString("F2") MAD</p>
+        <p><strong>VAT (Included):</strong> @Model.VAT.ToString("F2") MAD</p>
+        <p class="fs-5 fw-bold"><strong>Total Paid:</strong> @Model.Total.ToString("F2") MAD</p>
+
+        <!-- Payment Breakdown -->
+        <h5 class="mt-4">💳 Payment Breakdown</h5>
+        <ul class="list-group mb-3">
+            @foreach (var payment in Model.Payments)
+            {
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>@payment.Method</span>
+                    <strong>@payment.Amount.ToString("F2") MAD</strong>
+                </li>
+            }
+        </ul>
+        <p><strong>Placed By:</strong> @Model.CreatedBy</p>
+    </div>
+
+    <!-- Feedback QR -->
+    <div class="text-center mt-4">
+        <p class="fw-bold">📲 Scan to leave feedback</p>
+        <img src="data:image/png;base64,@qrCodeImageAsBase64" alt="Feedback QR Code" style="max-width: 200px;" />
+    </div>
+
+    <!-- Thank You Note -->
+    <hr />
+    <div class="text-center mt-3">
+        <p class="fw-bold">🙏 Thank you for dining with us!</p>
+        <p class="text-muted small">Visit again or leave us feedback by scanning the QR code.</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="text-center mt-4 no-print">
+        <button class="btn btn-dark" onclick="window.print()">🖨️ Print Receipt</button>
+        <a class="btn btn-secondary" asp-action="History">🔙 Back to History</a>
+        <button class="btn btn-outline-danger" id="exportToPdfBtn">📄 Export as PDF</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('exportToPdfBtn').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const orderId = '@Model.Id';
+            const orderDate = '@Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")';
+            const orderTotal = '@Model.Total.ToString("F2")';
+            const createdBy = '@Model.CreatedBy';
+            const subtotal = '@Model.Subtotal.ToString("F2")';
+            const vat = '@Model.VAT.ToString("F2")';
+
+            doc.setFontSize(18);
+            doc.text('🍽️ Maison Marocaine', 14, 20);
+            doc.setFontSize(12);
+            doc.text(`Order #: ${orderId}`, 14, 30);
+            doc.text(`Date: ${orderDate}`, 14, 40);
+            doc.text(`Placed By: ${createdBy}`, 14, 50);
+            let y = 60;
+            doc.text(`Subtotal: ${subtotal} MAD`, 14, y);
+            y += 10;
+            doc.text(`VAT: ${vat} MAD`, 14, y);
+            y += 10;
+            doc.text(`Total Paid: ${orderTotal} MAD`, 14, y);
+            doc.save(`Order_${orderId}.pdf`);
+        });
+    </script>
+}
+
+<style>
+    @@media print {
+        .no-print, .navbar, footer {
+            display: none !important;
+        }
+
+        #receipt {
+            max-width: 80mm;
+            margin: auto;
+            font-size: 14px;
+        }
+
+        table, td, th {
+            border: 1px solid #000 !important;
+        }
+    }
+</style>

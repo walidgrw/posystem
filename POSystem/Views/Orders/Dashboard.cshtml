@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Daily Dashboard";
+    var bestSellers = ViewBag.BestSellers as List<dynamic> ?? new List<dynamic>();
+    var revenueLast7Days = ViewBag.RevenueLast7Days as List<dynamic> ?? new List<dynamic>();
+    var ordersByCategory = ViewBag.OrdersByCategory as List<dynamic> ?? new List<dynamic>();
+}
+
+<div class="container py-4">
+    <h2 class="mb-4 text-center">📊 Daily Sales Report — @DateTime.Today.ToString("dd MMM yyyy")</h2>
+
+    <div class="row g-3 mb-5">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-start border-4 border-primary">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-muted">🧾 Total Orders</h5>
+                    <h2 class="text-primary fw-bold">@ViewBag.TotalOrders</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-start border-4 border-success">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-muted">💵 Total Sales (MAD)</h5>
+                    <h2 class="text-success fw-bold">@ViewBag.TotalSales.ToString("F2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-start border-4 border-warning">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-muted">📈 VAT Collected</h5>
+                    <h2 class="text-warning fw-bold">@ViewBag.TotalVAT.ToString("F2")</h2>
+                </div>
+            </div>
+        </div>
+    </div>

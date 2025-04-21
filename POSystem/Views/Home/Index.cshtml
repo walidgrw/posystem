@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container py-5 text-center">
+    <h1 class="display-4 mb-4">🍽️ Welcome to POSystem</h1>
+    <p class="lead mb-5">Manage your café or restaurant orders efficiently and professionally.</p>
+
+    <div class="row justify-content-center g-4">
+        <div class="col-md-4">
+            <div class="card border-start border-4 border-success shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title">➕ New Order</h5>
+                    <p class="card-text">Quickly create a new customer order.</p>
+                    <a class="btn btn-success w-100" asp-controller="Orders" asp-action="Create">Start Order</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-start border-4 border-primary shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title">📋 Menu Manager</h5>
+                    <p class="card-text">Add or edit food and drink items.</p>
+                    <a class="btn btn-primary w-100" asp-controller="MenuItems" asp-action="Index">Manage Menu</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-start border-4 border-warning shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title">📊 Sales Dashboard</h5>
+                    <p class="card-text">View today’s orders, sales and VAT report.</p>
+                    <a class="btn btn-warning w-100" asp-controller="Orders" asp-action="Dashboard">View Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

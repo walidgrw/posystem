@@ -1,0 +1,65 @@
+﻿@model IEnumerable<POSystem.Models.MenuItem>
+
+@{
+    ViewData["Title"] = "Menu Items";
+    var categories = ViewBag.Categories as List<string>;
+    var selectedCategory = Context.Request.Query["category"].ToString();
+}
+
+<div class="container py-4">
+    <h2 class="text-center mb-4">📋 Menu Items</h2>
+
+    <!-- 🔍 Filter by Category -->
+    <form method="get" asp-action="Index" class="d-flex justify-content-center align-items-center gap-2 mb-4 flex-wrap">
+        <label class="fw-bold">Filter by Category:</label>
+        <select name="category" class="form-select w-auto" onchange="this.form.submit()">
+            <option value="">All</option>
+            @foreach (var cat in categories)
+            {
+                <option value="@cat" selected="@(selectedCategory == cat ? "selected" : null)">
+                    @cat
+                </option>
+            }
+        </select>
+        <a class="btn btn-secondary" asp-action="Index">Reset</a>
+    </form>
+
+    <div class="mb-3 text-end">
+        <a class="btn btn-success btn-lg px-4" asp-action="Create">➕ Add New Item</a>
+    </div>
+
+    <!-- 🧾 Menu Table -->
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price (MAD)</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Category</td>
+                        <td>@item.Price.ToString("F2")</td>
+                        <td>
+                            <span class="badge bg-@(item.IsAvailable ? "success" : "danger")">
+                                @(item.IsAvailable ? "Available" : "Unavailable")
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-warning me-1" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-sm btn-outline-info me-1" asp-action="Details" asp-route-id="@item.Id">View</a>
+                            <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

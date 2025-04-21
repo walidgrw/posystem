@@ -1,0 +1,94 @@
+﻿@model POSystem.Models.MenuItem
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MenuItem</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsAvailable)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsAvailable)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<!-- Export PDF Button -->
+<div class="text-center mt-4 no-print">
+    <button class="btn btn-outline-danger" id="exportToPdfBtn">📄 Export as PDF</button>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('exportToPdfBtn').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const menuItemName = '@Model.Name';
+            const menuItemPrice = '@Model.Price';
+            const menuItemCategory = '@Model.Category';
+            const menuItemAvailability = '@Model.IsAvailable ? "Available" : "Not Available"';
+
+            doc.setFontSize(18);
+            doc.text('Menu Item Details', 14, 20);
+
+            doc.setFontSize(12);
+            doc.text(`Name: ${menuItemName}`, 14, 30);
+            doc.text(`Price: ${menuItemPrice} MAD`, 14, 40);
+            doc.text(`Category: ${menuItemCategory}`, 14, 50);
+            doc.text(`Availability: ${menuItemAvailability}`, 14, 60);
+
+            // Save the PDF
+            doc.save(`MenuItem_${menuItemName}.pdf`);
+        });
+    </script>
+}
+
+<style>
+    @@media print {
+        .no-print, .navbar, footer {
+            display: none !important;
+        }
+
+        #receipt {
+            max-width: 80mm;
+            margin: auto;
+            font-size: 14px;
+        }
+
+        table, td, th {
+            border: 1px solid #000 !important;
+        }
+    }
+</style>

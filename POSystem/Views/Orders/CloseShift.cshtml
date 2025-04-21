@@ -1,0 +1,85 @@
+﻿@model POSystem.Models.ShiftReportViewModel
+
+@{
+    ViewData["Title"] = "Shift Closing Report";
+}
+
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">📋 Shift Closing Report</h2>
+        <p class="text-muted">From @Model.From.ToString("dd/MM/yyyy HH:mm") to @Model.To.ToString("dd/MM/yyyy HH:mm")</p>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card border-start border-4 border-primary shadow-sm">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">Total Orders</h6>
+                    <h3 class="fw-bold text-primary">@Model.TotalOrders</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-start border-4 border-success shadow-sm">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">Total Sales (MAD)</h6>
+                    <h3 class="fw-bold text-success">@Model.TotalSales.ToString("F2")</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-start border-4 border-warning shadow-sm">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">VAT Collected</h6>
+                    <h3 class="fw-bold text-warning">@Model.TotalVAT.ToString("F2")</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mb-3">💳 Payment Summary</h4>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Method</th>
+                <th class="text-end">Amount (MAD)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var payment in Model.PaymentSummary)
+            {
+                <tr>
+                    <td>@payment.Key</td>
+                    <td class="text-end">@payment.Value.ToString("F2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4 class="mt-5">👤 Staff on Shift</h4>
+    <ul class="list-group">
+        @foreach (var staff in Model.Staff)
+        {
+            <li class="list-group-item">@staff</li>
+        }
+    </ul>
+
+    <div class="text-center mt-5">
+        <button class="btn btn-dark" onclick="window.print()">🖨️ Print Report</button>
+        <a class="btn btn-secondary" asp-action="Dashboard">🔙 Back to Dashboard</a>
+    </div>
+</div>
+
+<style>
+    @@media print {
+        .btn, .navbar, footer {
+            display: none !important;
+        }
+
+        body {
+            font-size: 14px;
+            color: #000;
+        }
+    }
+</style>
+

@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User 1\\Desktop\\POSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8D7421A8-122C-4AB4-8B70-7446867173D6}|POSystem\\POSystem.csproj|c:\\users\\user 1\\desktop\\posystem\\posystem\\views\\orders\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8D7421A8-122C-4AB4-8B70-7446867173D6}|POSystem\\POSystem.csproj|solutionrelative:posystem\\views\\orders\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D7421A8-122C-4AB4-8B70-7446867173D6}|POSystem\\POSystem.csproj|c:\\users\\user 1\\desktop\\posystem\\posystem\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D7421A8-122C-4AB4-8B70-7446867173D6}|POSystem\\POSystem.csproj|solutionrelative:posystem\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D7421A8-122C-4AB4-8B70-7446867173D6}|POSystem\\POSystem.csproj|c:\\users\\user 1\\desktop\\posystem\\posystem\\views\\orders\\review.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8D7421A8-122C-4AB4-8B70-7446867173D6}|POSystem\\POSystem.csproj|solutionrelative:posystem\\views\\orders\\review.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\User 1\\Desktop\\POSystem\\POSystem\\Views\\Orders\\Details.cshtml",
+              "RelativeDocumentMoniker": "POSystem\\Views\\Orders\\Details.cshtml",
+              "ToolTip": "C:\\Users\\User 1\\Desktop\\POSystem\\POSystem\\Views\\Orders\\Details.cshtml",
+              "RelativeToolTip": "POSystem\\Views\\Orders\\Details.cshtml",
+              "ViewState": "AgIAAHkAAAAAAAAAAAAIwI0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-20T23:56:40.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Review.cshtml",
+              "DocumentMoniker": "C:\\Users\\User 1\\Desktop\\POSystem\\POSystem\\Views\\Orders\\Review.cshtml",
+              "RelativeDocumentMoniker": "POSystem\\Views\\Orders\\Review.cshtml",
+              "ToolTip": "C:\\Users\\User 1\\Desktop\\POSystem\\POSystem\\Views\\Orders\\Review.cshtml",
+              "RelativeToolTip": "POSystem\\Views\\Orders\\Review.cshtml",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAmwGQAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-20T23:42:33.275Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "OrdersController.cs",
+              "DocumentMoniker": "C:\\Users\\User 1\\Desktop\\POSystem\\POSystem\\Controllers\\OrdersController.cs",
+              "RelativeDocumentMoniker": "POSystem\\Controllers\\OrdersController.cs",
+              "ToolTip": "C:\\Users\\User 1\\Desktop\\POSystem\\POSystem\\Controllers\\OrdersController.cs",
+              "RelativeToolTip": "POSystem\\Controllers\\OrdersController.cs",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAIwHEAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T23:37:28.355Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
