@@ -124,7 +124,7 @@ git push origin main
 
 ## 👨‍💻 Developed by
 
-**Walid Grawi**  
+**Walid Graihim**  
 [GitHub: @walidgrw](https://github.com/walidgrw)
 
 ---
